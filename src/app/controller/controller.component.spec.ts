@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Controller } from './controller';
+import { Controller } from './controller.component';
 
 describe('Controller', () => {
   let component: Controller;

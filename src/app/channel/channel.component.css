@@ -1,0 +1,12 @@
+.btn {
+  margin-right: 10px auto;
+  width: 20px;
+  display: auto;
+  font-size: small;
+}
+
+.btntoggle {
+  margin-top: auto;
+  font-size: medium;
+  width: 100px;
+}
