@@ -1,1 +1,18 @@
-<p>controller works!</p>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <h3> controller.name </h3>
+  </mat-expansion-panel-header>
+  <div align="center" class="channel_list">
+    <table>
+      <tr>
+        <td *ngFor="let channel of channel_list; let channel_index = index">
+          <app-channel class="channel" [selectedChannelName]="channel.name" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <mat-action-row align="center">
+    <button mat-button (click)="toggleAllOn()">All On</button>
+    <button mat-button (click)="toggleAllOff()">All Off</button>
+  </mat-action-row>
+</mat-expansion-panel>

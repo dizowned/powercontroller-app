@@ -1,107 +1,62 @@
 <html>
-  <mat-sidenav-container class="sidenav-container" style="height:100vh;">
-    <mat-sidenav #sidenav mode="side" opened>
-      <mat-nav-list>
+<mat-sidenav-container class="sidenav-container" style="height:100vh;">
+  <mat-sidenav #sidenav mode="side" opened>
+    <mat-nav-list>
       <mat-toolbar color="primary">Menu</mat-toolbar>
-        <mat-list-item (click)="selectedView = 'home'" [class.active]="selectedView === 'home'">
-          <mat-icon matListIcon svgIcon="home"></mat-icon>
-          <h4 matLine>Home</h4>
-        </mat-list-item>
+      <mat-list-item (click)="selectedView = 'home'" [class.active]="selectedView === 'home'">
+        <mat-icon matListIcon svgIcon="home"></mat-icon>
+        <h4 matLine>Home</h4>
+      </mat-list-item>
 
-        <mat-list-item (click)="selectedView = 'config'" [class.active]="selectedView === 'config'">
-          <mat-icon matListIcon svgIcon="settings"></mat-icon>
-          <h4 matLine>Configuration</h4>
-        </mat-list-item>
-      </mat-nav-list>
-    </mat-sidenav>
+      <mat-list-item (click)="selectedView = 'config'" [class.active]="selectedView === 'config'">
+        <mat-icon matListIcon svgIcon="settings"></mat-icon>
+        <h4 matLine>Configuration</h4>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
 
-    <mat-sidenav-content>
-      <mat-toolbar color="primary">
-        <button mat-icon-button (click)="sidenav.toggle()" class="mobile-toggle" aria-label="Toggle menu">
-          <mat-icon svgIcon="menu"></mat-icon>
-        </button>
-        <span style="margin-left:8px;">POWER CONTROLLER</span>
-      </mat-toolbar>
+  <!-- CONFIG view: Controller Configuration add/remove/configure -->
+  <ng-container *ngIf="selectedView === 'config'">
+    <mat-card style="max-width:720px; margin:16px auto; padding:16px;">
+      <mat-card-title>Configuration</mat-card-title>
+      <mat-card-content>
+        <form class="config-form" novalidate>
+          <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <mat-form-field appearance="fill" style="flex:1 1 240px;">
+              <mat-label>Controller Name</mat-label>
+              <input matInput placeholder="e.g. Main Controller" name="controllerName"
+                [(ngModel)]="config.controllerName" />
+            </mat-form-field>
 
-      <div style="padding:16px;">
-        <!-- HOME view: Main Controller Page -->
-        <ng-container *ngIf="selectedView === 'home'">
-          <h1 align="center"> POWER CONTROLLER </h1>
-          <mat-accordion multi="true">
-            <mat-expansion-panel>
-              <mat-expansion-panel-header> <h3> Upstairs Controller </h3> </mat-expansion-panel-header>
-              <div align="center" class="channel_list">
-                <table>
-                  <tr>
-                    <td *ngFor="let channel of channel_list; let channel_index = index">
-                      <app-channel class="channel" [selectedChannelName]="channel.name" />
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <mat-action-row align="center">
-                  <button mat-button (click)="toggleAllOn()">All On</button>
-                  <button mat-button (click)="toggleAllOff()">All Off</button>
-              </mat-action-row>
-            </mat-expansion-panel>
+            <mat-form-field appearance="fill" style="flex:0 0 160px;">
+              <mat-label>Channels</mat-label>
+              <input matInput type="number" min="1" placeholder="8" name="channelCount"
+                [(ngModel)]="config.channelCount" />
+            </mat-form-field>
 
-            <mat-expansion-panel>
-              <mat-expansion-panel-header> <h3> Downstairs Controller </h3> </mat-expansion-panel-header>
-              <div align="center" class="channel_list">
-                <table>
-                  <tr>
-                    <td *ngFor="let channel of channel_list; let channel_index = index">
-                      <app-channel class="channel" [selectedChannelName]="channel.name" />
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <mat-action-row class="mat-action-row">
-                  <button mat-button (click)="toggleAllOn()">All On</button>
-                  <button mat-button (click)="toggleAllOff()">All Off</button>
-              </mat-action-row>
-            </mat-expansion-panel>
-          </mat-accordion>
-        </ng-container>
+            <mat-form-field appearance="fill" style="flex:0 0 200px;">
+              <mat-label>Auto-refresh (sec)</mat-label>
+              <input matInput type="number" min="0" placeholder="30" name="refreshInterval"
+                [(ngModel)]="config.refreshInterval" />
+            </mat-form-field>
+          </div>
 
-        <!-- CONFIG view: Controller Configuration add/remove/configure -->
-        <ng-container *ngIf="selectedView === 'config'">
-          <mat-card style="max-width:720px; margin:16px auto; padding:16px;">
-            <mat-card-title>Configuration</mat-card-title>
-            <mat-card-content>
-              <form class="config-form" novalidate>
-                <div style="display:flex; flex-wrap:wrap; gap:12px;">
-                  <mat-form-field appearance="fill" style="flex:1 1 240px;">
-                    <mat-label>Controller Name</mat-label>
-                    <input matInput placeholder="e.g. Main Controller" name="controllerName" [(ngModel)]="config.controllerName" />
-                  </mat-form-field>
+          <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
+            <button mat-stroked-button type="button" (click)="resetConfig()">Reset</button>
+            <button mat-flat-button color="primary" type="button" (click)="saveConfig()">Save</button>
+          </div>
 
-                  <mat-form-field appearance="fill" style="flex:0 0 160px;">
-                    <mat-label>Channels</mat-label>
-                    <input matInput type="number" min="1" placeholder="8" name="channelCount" [(ngModel)]="config.channelCount" />
-                  </mat-form-field>
+          <mat-divider style="margin-top:12px;"></mat-divider>
 
-                  <mat-form-field appearance="fill" style="flex:0 0 200px;">
-                    <mat-label>Auto-refresh (sec)</mat-label>
-                    <input matInput type="number" min="0" placeholder="30" name="refreshInterval" [(ngModel)]="config.refreshInterval" />
-                  </mat-form-field>
-                </div>
+          <div style="margin-top:12px; font-size:13px; color:rgba(0,0,0,0.6);">
+            Tip: Configure the controller name and number of channels here.
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
-                <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
-                  <button mat-stroked-button type="button" (click)="resetConfig()">Reset</button>
-                  <button mat-flat-button color="primary" type="button" (click)="saveConfig()">Save</button>
-                </div>
-
-                <mat-divider style="margin-top:12px;"></mat-divider>
-
-                <div style="margin-top:12px; font-size:13px; color:rgba(0,0,0,0.6);">
-                  Tip: Configure the controller name and number of channels here.
-                </div>
-              </form>
-            </mat-card-content>
-          </mat-card>
-        </ng-container>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
 </html>
