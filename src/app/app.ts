@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { Controller } from "./components/controller/controller.component";
 
 
 @Component({
@@ -31,12 +32,13 @@ import { MatDividerModule } from '@angular/material/divider';
     MatInputModule,
     MatCardModule,
     MatDividerModule,
-    MatListModule
-  ],
+    MatListModule,
+    Controller
+],
   standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('powercontroller-app');
+  protected readonly title = signal('POWER CONTROLLER APP');
 }
