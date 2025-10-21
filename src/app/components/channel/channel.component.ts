@@ -31,4 +31,12 @@ export class ChannelComponent {
     return this.selectedChannel;
   }
 
+  toggleChannel(){
+    this.channelEnabled = !this.channelEnabled;
+    if(this.channelEnabled){
+      this.buttonColor = 'green';
+    } else{
+      this.buttonColor = 'red';
+    }
+  }
 }
