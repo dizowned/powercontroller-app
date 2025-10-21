@@ -8,7 +8,7 @@
       <tr>
         <td>
         @for (channel of channels; track $index){
-          <app-channel [selectedChannelName]=""></app-channel>
+          <app-channel [selectedChannelName] = channelList.name ></app-channel>
         }
         </td>
       </tr>
