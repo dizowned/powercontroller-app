@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Input } from '@angular/core';
 
 @Component({
@@ -9,26 +9,16 @@ import { Input } from '@angular/core';
 })
 export class ChannelComponent {
  @Input() selectedChannel!: number;
- @Input() selectedChannelName!: string ;
+ @Input() channelName!: string ;
  @Input() selectedChannelStatus!: boolean;
  channelEnabled: boolean = true;
  channel_index: number = 0;
  buttonColor: string = 'green';
 
-  constructor(){
-
-  }
-
-  set channelName(name: string){
-    this.selectedChannelName = name;
-  }
+  constructor() {}
 
   get Status(){
     return this.selectedChannelStatus;
-  }
-
-  get channelName(){
-    return this.selectedChannelName;
   }
 
   get channelNo(){

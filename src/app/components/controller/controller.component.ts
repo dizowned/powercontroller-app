@@ -17,7 +17,9 @@ import { PowercontrollerService } from '../../services/powercontroller-service';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatListModule],
+    MatListModule,
+    ChannelComponent
+    ],
   templateUrl: './controller.component.html',
   styleUrls: ['./controller.component.css']
 })
@@ -26,10 +28,12 @@ export class Controller {
  controllerName: string = 'Power Controller';
  selectedChannel: number = 1;
  controller_url: string | null = null;
- channelList = [
-    { name: 'Channel 1', status: true },
-    { name: 'Channel 2', status: true }];
- channels: ChannelComponent[] = [];
+ channelList: ChannelComponent[]  = [
+    new ChannelComponent(), new ChannelComponent(), new ChannelComponent(),
+    new ChannelComponent(), new ChannelComponent(), new ChannelComponent(),
+    new ChannelComponent(), new ChannelComponent(), new ChannelComponent(),
+    new ChannelComponent()
+ ];
 
   constructor(private powercontrollerService: PowercontrollerService) {
     if (this.controller_url) {
@@ -39,35 +43,41 @@ export class Controller {
         this.noChannels = data.noChannels;
       });
     }
+
+    for (let i = 0; i < this.noChannels; i++) {
+      this.channelList[i].selectedChannel = i;
+      this.channelList[i].channelName = 'Channel ' + (i + 1);
+      this.channelList[i].channelEnabled = true;
+    }
+
   }
 
-  turnOff(){
+  turnOff(index: number = this.selectedChannel){
     console.log("Turning off: " + this.selectedChannel);
-    this.channels[this.selectedChannel].channelEnabled = false;
+    this.channelList[this.selectedChannel].channelEnabled = false;
   }
 
-  turnOn(){
+  turnOn(index: number = this.selectedChannel){
     console.log("Turning on: " + this.selectedChannel);
-    this.channels[this.selectedChannel].channelEnabled = true;
+    this.channelList[this.selectedChannel].channelEnabled = true;
   }
 
-  togglePower(){
-      const channel = this.selectedChannel;
-      if (this.channels[channel].channelEnabled)
+  togglePower(index : number = this.selectedChannel){
+      if (this.channelList[index].channelEnabled)
         this.turnOff();
       else
         this.turnOn();
   }
 
   toggleAllOn(){
-    for (let i = 0; i < this.channels.length; i++) {
-      this.channels[i].channelEnabled = true;
+    for (let i = 0; i < this.noChannels; i++) {
+      this.channelList[i].channelEnabled = true;
     }
   }
 
   toggleAllOff(){
-    for (let i = 0; i < this.channels.length; i++) {
-      this.channels[i].channelEnabled = false;
+    for (let i = 0; i < this.noChannels; i++) {
+      this.channelList[i].channelEnabled = false;
     }
   }
 

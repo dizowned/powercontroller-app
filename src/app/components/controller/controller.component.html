@@ -5,15 +5,13 @@
   </mat-expansion-panel-header>
   <div align="center" class="channel_list">
     <table>
-      <tr><td> "A table Row" </td></tr>
       <tr>
-        <td> " Another table Row"
-      <!--
-        @for (channel of channels; track $index){
-          channel.name
-          <app-channel [selectedChannelName] = channelList.name ></app-channel>
+        <td>
+        @for (channel of channelList; track $index){
+          <app-channel [channelName]="channelList[$index].channelName"
+                       [selectedChannel]="channelList[$index].channelNo">
+          </app-channel>
         }
-      -->
         </td>
       </tr>
     </table>
