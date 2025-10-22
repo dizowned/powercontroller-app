@@ -19,6 +19,10 @@ export class ChannelComponent {
 
   }
 
+  set channelName(name: string){
+    this.selectedChannelName = name;
+  }
+
   get Status(){
     return this.selectedChannelStatus;
   }
