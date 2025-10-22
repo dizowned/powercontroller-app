@@ -7,7 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ChannelComponent} from '../../components/channel/channel.component';
 import {MatListModule } from "@angular/material/list";
-import { PowercontrollerService } from '../../service/powercontroller-service';
+import { PowercontrollerService } from '../../services/powercontroller-service';
 @Component({
   selector: 'app-controller',
   standalone: true,
