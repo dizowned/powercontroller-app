@@ -1,4 +1,4 @@
-import {Component, input, InputSignal}  from '@angular/core';
+import {Component, signal,model,input, InputSignal}  from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -7,7 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ChannelComponent} from '../../components/channel/channel.component';
 import {MatListModule } from "@angular/material/list";
-import { PowercontrollerService } from '../../services/powercontroller-service';
+import {PowercontrollerService } from '../../services/powercontroller-service';
 @Component({
   selector: 'app-controller',
   standalone: true,
@@ -28,57 +28,72 @@ export class Controller {
  controllerName: string = 'Power Controller';
  selectedChannel: number = 1;
  controller_url: string | null = null;
- channelList: ChannelComponent[]  = [
-    new ChannelComponent(), new ChannelComponent(), new ChannelComponent(),
-    new ChannelComponent(), new ChannelComponent(), new ChannelComponent(),
-    new ChannelComponent(), new ChannelComponent(), new ChannelComponent(),
-    new ChannelComponent()
- ];
+ channelList = model <ChannelComponent[]> ([]);
 
   constructor(private powercontrollerService: PowercontrollerService) {
+
+    console.log("PowerController: " + this.controllerName + " initializing...")
+    console.log("URL: " + this.controller_url);
     if (this.controller_url) {
+      console.log("Fetching controller info for URL: " + this.controller_url);
       this.powercontrollerService.getControllerInfo(this.controller_url)
       .subscribe((data: { controllerName: string; noChannels: number; channelList: ChannelComponent[]}) => {
         this.controllerName = data.controllerName;
         this.noChannels = data.noChannels;
       });
     }
-
     for (let i = 0; i < this.noChannels; i++) {
-      this.channelList[i].selectedChannel = i;
-      this.channelList[i].channelName = 'Channel ' + (i + 1);
-      this.channelList[i].channelEnabled = true;
+      this.channelList.update((list) => {
+        list.push(new ChannelComponent());
+        list[i].channelNo.set(i + 1);
+        list[i].channelName.set("Channel " + (i + 1));
+        list[i].channelEnabled.set(true);
+        return list;
+      })
     }
-
   }
 
   turnOff(index: number = this.selectedChannel){
     console.log("Turning off: " + this.selectedChannel);
-    this.channelList[this.selectedChannel].channelEnabled = false;
+    this.channelList.update((list) => {
+      list[index].channelEnabled.set(false);
+      return list
+    })
   }
 
   turnOn(index: number = this.selectedChannel){
-    console.log("Turning on: " + this.selectedChannel);
-    this.channelList[this.selectedChannel].channelEnabled = true;
+    console.log("Turning off: " + this.selectedChannel);
+    this.channelList.update((list) => {
+      list[index].channelEnabled.set(true);
+      return list
+    })
   }
 
   togglePower(index : number = this.selectedChannel){
-      if (this.channelList[index].channelEnabled)
+      if (this.channelList()[index].channelEnabled())
         this.turnOff();
       else
         this.turnOn();
   }
 
   toggleAllOn(){
-    for (let i = 0; i < this.noChannels; i++) {
-      this.channelList[i].channelEnabled = true;
+    for (let index = 0; index < this.noChannels; index++) {
+      this.channelList.update((list) => {
+      list[index].channelEnabled.set(true);
+      return list
+    })
     }
+    console.log("All channels toggled on.");
   }
 
-  toggleAllOff(){
-    for (let i = 0; i < this.noChannels; i++) {
-      this.channelList[i].channelEnabled = false;
+ toggleAllOff(){
+    for (let index = 0; index < this.noChannels; index++) {
+      this.channelList.update((list) => {
+      list[index].channelEnabled.set(false);
+      return list
+    })
     }
+    console.log("All channels toggled off.");
   }
-
 }
+
