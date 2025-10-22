@@ -6,6 +6,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ChannelComponent} from '../channel/channel.component';
+import {MatListModule } from "@angular/material/list";
 
 @Component({
   selector: 'app-controller',
@@ -16,7 +17,7 @@ import {ChannelComponent} from '../channel/channel.component';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    ChannelComponent],
+    ChannelComponent, MatListModule],
   templateUrl: './controller.component.html',
   styleUrls: ['./controller.component.css']
 })
