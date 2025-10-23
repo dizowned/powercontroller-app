@@ -1,4 +1,4 @@
-import {Component, signal,model,input, InputSignal}  from '@angular/core';
+import {Component, signal,model,input, InputSignal, ChangeDetectorRef}  from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -30,7 +30,7 @@ export class Controller {
  controller_url: string | null = null;
  channelList = model <ChannelComponent[]> ([]);
 
-  constructor(private powercontrollerService: PowercontrollerService) {
+  constructor(private powercontrollerService: PowercontrollerService, private cdRef: ChangeDetectorRef) {
 
     console.log("PowerController: " + this.controllerName + " initializing...")
     console.log("URL: " + this.controller_url);
@@ -44,7 +44,7 @@ export class Controller {
     }
     for (let i = 0; i < this.noChannels; i++) {
       this.channelList.update((list) => {
-        list.push(new ChannelComponent());
+        list.push(new ChannelComponent(this.cdRef));
         list[i].channelNo.set(i + 1);
         list[i].channelName.set("Channel " + (i + 1));
         list[i].channelEnabled.set(true);
@@ -53,34 +53,11 @@ export class Controller {
     }
   }
 
-  turnOff(index: number = this.selectedChannel){
-    console.log("Turning off: " + this.selectedChannel);
-    this.channelList.update((list) => {
-      list[index].channelEnabled.set(false);
-      return list
-    })
-  }
-
-  turnOn(index: number = this.selectedChannel){
-    console.log("Turning off: " + this.selectedChannel);
-    this.channelList.update((list) => {
-      list[index].channelEnabled.set(true);
-      return list
-    })
-  }
-
-  togglePower(index : number = this.selectedChannel){
-      if (this.channelList()[index].channelEnabled())
-        this.turnOff();
-      else
-        this.turnOn();
-  }
-
   toggleAllOn(){
     for (let index = 0; index < this.noChannels; index++) {
       this.channelList.update((list) => {
-      list[index].channelEnabled.set(true);
-      return list
+      list[index].turnOn();
+      return list;
     })
     }
     console.log("All channels toggled on.");
@@ -89,8 +66,8 @@ export class Controller {
  toggleAllOff(){
     for (let index = 0; index < this.noChannels; index++) {
       this.channelList.update((list) => {
-      list[index].channelEnabled.set(false);
-      return list
+      list[index].turnOff();
+      return list;
     })
     }
     console.log("All channels toggled off.");

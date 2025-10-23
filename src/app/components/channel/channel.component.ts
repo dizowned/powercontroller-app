@@ -1,4 +1,4 @@
-import { Component, Inject, Output, EventEmitter, model } from '@angular/core';
+import { Component, Inject, Output, EventEmitter, model, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Input } from '@angular/core';
 import { channel } from 'diagnostics_channel';
 
@@ -14,7 +14,9 @@ export class ChannelComponent {
  channelEnabled = model<boolean>(true);
  @Output() channelToggle = new EventEmitter<string>();
  buttonColor: string = 'green';
- constructor() {}
+ @ViewChild('channelButton') channelButton!: ElementRef<HTMLButtonElement>;
+ constructor(private cdRef: ChangeDetectorRef) {}
+
 
   toggleChannel(){
     this.channelEnabled.update((enabled) => !enabled);
@@ -25,4 +27,23 @@ export class ChannelComponent {
     }
     console.log("Channel " + this.channelNo + " toggled to " + (this.channelEnabled() ? "enabled" : "disabled"));
   }
+
+  turnOff(){
+    console.log("Turning off: " + this.channelName());
+    if(this.channelEnabled() === true){
+      this.channelButton.nativeElement.click();
+    }
+    this.channelEnabled.update((enabled) => false);
+    this.cdRef.detectChanges();
+  }
+
+  turnOn(){
+    console.log("Turning on: " + this.channelName());
+    if(this.channelEnabled() === false){
+      this.channelButton.nativeElement.click();
+    }
+    this.channelEnabled.update((enabled) => true);
+    this.cdRef.detectChanges();
+  }
+
 }
