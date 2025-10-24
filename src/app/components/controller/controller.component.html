@@ -10,7 +10,8 @@
         @for (channel of channelList(); track $index){
           <app-channel [(channelName)] = "channelList()[$index].channelName"
                        [(channelNo)]= "channelList()[$index].channelNo"
-                       [(channelEnabled)]="channelList()[$index].channelEnabled">
+                       [(channelEnabled)]="channelList()[$index].channelEnabled"
+                       [(buttonColor)]="channelList()[$index].buttonColor">
           </app-channel>
         }
         </td>
