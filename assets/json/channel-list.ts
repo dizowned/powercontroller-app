@@ -1,4 +1,4 @@
-export const CHANNELS = [
+export const CHANNEL_LIST = [
   { channelNo:1, name:"Channel 1", isEnabled:true},
   { channelNo:2, name:"Channel 2", isEnabled:true },
   { channelNo:3, name:"Channel 3", isEnabled:true },
