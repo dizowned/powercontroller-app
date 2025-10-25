@@ -7,8 +7,14 @@
     <table>
       <tr>
         <td>
-        @for (channel of channelList(); track $index){
-          <app-channel channelName=$index> </app-channel>
+        @for (controller_channel of channelList(); track $index){
+          <app-channel
+            [(channelNo)]=controller_channel.channelNo
+            [(channelName)]=controller_channel.channelName
+            [(channelEnabled)]=controller_channel.channelEnabled
+            [(buttonColor)]=controller_channel.buttonColor
+          >
+          </app-channel>
         }
         </td>
       </tr>

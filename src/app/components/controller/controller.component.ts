@@ -1,4 +1,4 @@
-import {Component, signal}  from '@angular/core';
+import {Component, model, ChangeDetectionStrategy}  from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -21,13 +21,14 @@ import {PowercontrollerService } from '../../services/powercontroller-service';
     ChannelComponent
     ],
   templateUrl: './controller.component.html',
-  styleUrls: ['./controller.component.css']
+  styleUrls: ['./controller.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Controller {
  controller_url: string | null = null;
  controllerName: string = 'Default Power Controller';
  noChannels: number = 10;
- channelList = signal <ChannelComponent[]> ([]);
+ channelList = model <ChannelComponent[]> ([]);
 
   constructor(private powercontrollerService: PowercontrollerService) {
 
@@ -48,6 +49,7 @@ export class Controller {
         list[i].channelNo.set(i + 1);
         list[i].channelName.set("Channel " + (i + 1));
         list[i].channelEnabled.set(true);
+        list[i].buttonColor.set('green');
         return list;
       })
     }

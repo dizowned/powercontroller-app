@@ -1,21 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component, model, ChangeDetectionStrategy } from '@angular/core';
 @Component({
   standalone: true,
   selector: 'app-channel',
   templateUrl: './channel.component.html',
   styleUrls: ['./channel.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChannelComponent {
-  channelNo = signal<number>(1);
-  channelName = signal<string>('');
-  channelEnabled = signal<boolean>(true);
-  buttonColor = signal<string>('green');
+
+  channelNo = model<number>();
+  channelName = model<string>();
+  channelEnabled = model<boolean>();
+  buttonColor = model<string>();
 
   constructor() {}
-
-  public setButtonColor(color: string) {
-    this.buttonColor.update((buttonColor) => color);
-  }
 
   toggleChannel() {
     if (this.channelEnabled()) {
@@ -30,15 +28,14 @@ export class ChannelComponent {
     );
   }
 
-  turnOff() {
-    console.log('Turning off: ' + this.channelName() + '; button was: ' + this.buttonColor);
-    this.channelEnabled.update((enabled) => false);
-    this.setButtonColor('red');
+  turnOn() {
+    this.channelEnabled.set(true);
+    this.buttonColor.set('green');
   }
 
-  turnOn() {
-    console.log('Turning on: ' + this.channelName() + '; button was: ' + this.buttonColor);
-    this.channelEnabled.update((enabled) => true);
-    this.setButtonColor('green');
+  turnOff() {
+    this.channelEnabled.set(false);
+    this.buttonColor.set('red');
   }
+
 }
