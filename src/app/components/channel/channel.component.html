@@ -1,6 +1,6 @@
 
 <div>
   <h1>
-    <button #channelButton [ngStyle]="{'background-color': buttonColor }" class="font-bold underline" (click)="toggleChannel()"> {{channelName()}} </button>
+    <button style="background-color: '{{buttonColor()}}'" (click)="toggleChannel()"> {{channelName()}} </button>
   </h1>
 </div>

@@ -1,4 +1,4 @@
-import {Component, signal,model,input, InputSignal, ChangeDetectorRef}  from '@angular/core';
+import {Component, signal}  from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -24,13 +24,12 @@ import {PowercontrollerService } from '../../services/powercontroller-service';
   styleUrls: ['./controller.component.css']
 })
 export class Controller {
- noChannels: number = 10;
- controllerName: string = 'Power Controller';
- selectedChannel: number = 1;
  controller_url: string | null = null;
- channelList = model <ChannelComponent[]> ([]);
+ controllerName: string = 'Default Power Controller';
+ noChannels: number = 10;
+ channelList = signal <ChannelComponent[]> ([]);
 
-  constructor(private powercontrollerService: PowercontrollerService, private cdRef: ChangeDetectorRef) {
+  constructor(private powercontrollerService: PowercontrollerService) {
 
     console.log("PowerController: " + this.controllerName + " initializing...")
     console.log("URL: " + this.controller_url);
@@ -44,7 +43,8 @@ export class Controller {
     }
     for (let i = 0; i < this.noChannels; i++) {
       this.channelList.update((list) => {
-        list.push(new ChannelComponent(this.cdRef));
+        console.log("Adding channel: " + (i + 1) + ", for controller: " + this.controllerName  );
+        list.push(new ChannelComponent());
         list[i].channelNo.set(i + 1);
         list[i].channelName.set("Channel " + (i + 1));
         list[i].channelEnabled.set(true);
