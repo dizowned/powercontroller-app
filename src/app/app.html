@@ -1,65 +1,14 @@
-<app-main-page></app-main-page>
-<app-config-page></app-config-page>
-<!--
-<mat-sidenav-container class="sidenav-container" style="height:100vh;">
-  <mat-sidenav #sidenav mode="side" opened>
-    <mat-nav-list>
-      <mat-toolbar color="primary">Menu</mat-toolbar>
-      <mat-list-item (click)="selectedView = 'home'" [class.active]="selectedView === 'home'">
-        <mat-icon matListIcon svgIcon="home"></mat-icon>
-        <h4 matLine>Home</h4>
-      </mat-list-item>
-
-      <mat-list-item (click)="selectedView = 'config'" [class.active]="selectedView === 'config'">
-        <mat-icon matListIcon svgIcon="settings"></mat-icon>
-        <h4 matLine>Configuration</h4>
-      </mat-list-item>
-    </mat-nav-list>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" [opened]="true" class="sidenav">
+    <app-side-nav></app-side-nav>
   </mat-sidenav>
--->
-  <!-- CONFIG view: Controller Configuration add/remove/configure -->
-
-<!--
-  <ng-container *ngIf="selectedView === 'config'">
-    <mat-card style="max-width:720px; margin:16px auto; padding:16px;">
-      <mat-card-title>Configuration</mat-card-title>
-      <mat-card-content>
-        <form class="config-form" novalidate>
-          <div style="display:flex; flex-wrap:wrap; gap:12px;">
-            <mat-form-field appearance="fill" style="flex:1 1 240px;">
-              <mat-label>Controller Name</mat-label>
-              <input matInput placeholder="e.g. Main Controller" name="controllerName"
-                [(ngModel)]="config.controllerName" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" style="flex:0 0 160px;">
-              <mat-label>Channels</mat-label>
-              <input matInput type="number" min="1" placeholder="8" name="channelCount"
-                [(ngModel)]="config.channelCount" />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" style="flex:0 0 200px;">
-              <mat-label>Auto-refresh (sec)</mat-label>
-              <input matInput type="number" min="0" placeholder="30" name="refreshInterval"
-                [(ngModel)]="config.refreshInterval" />
-            </mat-form-field>
-          </div>
-
-          <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
-            <button mat-stroked-button type="button" (click)="resetConfig()">Reset</button>
-            <button mat-flat-button color="primary" type="button" (click)="saveConfig()">Save</button>
-          </div>
-
-          <mat-divider style="margin-top:12px;"></mat-divider>
-
-          <div style="margin-top:12px; font-size:13px; color:rgba(0,0,0,0.6);">
-            Tip: Configure the controller name and number of channels here.
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </ng-container>
-  </div>
+  <mat-sidenav-content class="sidenav-content">
+    <button mat-button (click)="sidenav.toggle()" class="menu-button" aria-label="Show/Hide Navigation"> Show/Hide Menu </button>
+    <mat-toolbar color="primary" class="title">
+      <mat-card-title>POWER CONTROLLER</mat-card-title>
+    </mat-toolbar>
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
--->

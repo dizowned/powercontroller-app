@@ -1,0 +1,36 @@
+.content {
+  margin-top: 0px;
+  flex: 1;
+  padding: 2rem;
+}
+
+.sidenav-container {
+  height: auto;
+
+}
+
+.top-nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.title {
+  justify-content: center;
+  text-align: center;
+  font-size:40px;
+}
+
+.sidenav-content {
+  align-items: center;
+  margin-left: 200px;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.menu-button {
+  text-align: left;
+}

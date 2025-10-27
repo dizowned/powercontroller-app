@@ -1,0 +1,11 @@
+<mat-accordion class="side-nav">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header class="side-nav-header">
+    <mat-panel-title class="menu-title">Navigation</mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-nav-list class="nav-links">
+      <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a mat-list-item routerLink="/configuration" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Configuration</a>
+    </mat-nav-list>
+  </mat-expansion-panel>
+</mat-accordion>

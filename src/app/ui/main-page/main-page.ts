@@ -1,5 +1,8 @@
 import { Component, model } from '@angular/core';
 import { Controller } from '../../components/controller/controller.component';
+import { provideRouter } from '@angular/router';
+import { routes } from '../../app.routes';
+
 
 @Component({
   selector: 'app-main-page',
