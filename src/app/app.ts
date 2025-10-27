@@ -15,7 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { Controller } from "./components/controller/controller.component";
+import { MainPage } from "./ui/main-page/main-page";
+import { ConfigPage } from "./ui/config-page/config-page";
 
 
 @Component({
@@ -33,7 +34,8 @@ import { Controller } from "./components/controller/controller.component";
     MatCardModule,
     MatDividerModule,
     MatListModule,
-    Controller
+    MainPage,
+    ConfigPage
 ],
   standalone: true,
   templateUrl: './app.html',

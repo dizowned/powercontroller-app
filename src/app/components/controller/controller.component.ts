@@ -1,4 +1,4 @@
-import {Component, model, ChangeDetectionStrategy}  from '@angular/core';
+import {Component, model, ChangeDetectionStrategy, input}  from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -8,6 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {ChannelComponent} from '../../components/channel/channel.component';
 import {MatListModule } from "@angular/material/list";
 import {PowercontrollerService } from '../../services/powercontroller-service';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-controller',
   standalone: true,
@@ -24,24 +25,36 @@ import {PowercontrollerService } from '../../services/powercontroller-service';
   styleUrls: ['./controller.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class Controller {
- controller_url: string | null = null;
+ controller_url: string = ('');
  controllerName: string = 'Default Power Controller';
  noChannels: number = 10;
  channelList = model <ChannelComponent[]> ([]);
+ client!: HttpClient;
+ controller_info: any;
+ private powerControllerService!: PowercontrollerService;
 
-  constructor(private powercontrollerService: PowercontrollerService) {
-
-    console.log("PowerController: " + this.controllerName + " initializing...")
-    console.log("URL: " + this.controller_url);
-    if (this.controller_url) {
-      console.log("Fetching controller info for URL: " + this.controller_url);
-      this.powercontrollerService.getControllerInfo(this.controller_url)
+  constructor(){
+    if (this.controller_url !== undefined && this.controller_url !== '') {
+    console.log("Fetching controller info from: " + this.controller_url);
+    this.client = new HttpClient(null as any);
+    this.powerControllerService = new PowercontrollerService(this.client);
+    this.controller_info = this.powerControllerService.getControllerInfo(this.controller_url)
       .subscribe((data: { controllerName: string; noChannels: number; channelList: ChannelComponent[]}) => {
         this.controllerName = data.controllerName;
         this.noChannels = data.noChannels;
+        this.channelList.set(data.channelList);
       });
+    console.log("PowerController: " + this.controllerName + " initialized...")
+
+    } else {
+      console.log("No controller URL provided, using default values.");
+      this.initializeChannels();
     }
+  }
+
+  initializeChannels(){
     for (let i = 0; i < this.noChannels; i++) {
       this.channelList.update((list) => {
         console.log("Adding channel: " + (i + 1) + ", for controller: " + this.controllerName  );
