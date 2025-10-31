@@ -1,36 +1,108 @@
+.example-container {
+  height: 500px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.example-sidenav {
+   user-select: none;
+}
+.full-width {
+  width: 100%;
+}
+.menu-button {
+  transition: 300ms ease-in-out;
+  transform: rotate(0deg);
+}
+.menu-button.rotated {
+  transform: rotate(180deg);
+}
+.submenu {
+  overflow-y: hidden;
+  transition: transform 300ms ease;
+  transform: scaleY(0);
+  transform-origin: top;
+  padding-left: 30px;
+}
+.submenu.expanded {
+  transform: scaleY(1);
+}
+
+
+#main_header{
+  position: relative;
+  top: 0;
+  left: 20%;
+  height: 20%;
+  width: 70%;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  text-align: center;
+  font-size:40px;
+  flex:auto;
+
+}
+
+#navigation {
+  position:relative;
+  display: flex;
+  height: 20%;
+  width: 100%;
+}
+
+#main-content {
+  flex: auto;
+  max-width: 100%;
+  justify-content: center;
+}
+
+.sidenav-container {
+  position:relative;
+  top: 0;
+  left: 0;
+  height: 20%;
+  width: 30%;
+  flex: auto;
+  height: auto;
+  background-color: red;
+}
+
+.sidenav {
+  width: 100%;
+}
+
+.sidenav-content {
+  align-items: center;
+}
+
+.menu-button {
+  text-align: left;
+}
+
 .content {
   margin-top: 0px;
   flex: 1;
   padding: 2rem;
 }
 
-.sidenav-container {
-  height: auto;
-
-}
-
-.top-nav {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0 1rem;
-}
-
-.title {
+.toolbar{
+  align-content: center;
+  text-align: center;
+  margin-bottom: 1rem;
   justify-content: center;
   text-align: center;
   font-size:40px;
+  flex:auto;
+
 }
 
-.sidenav-content {
-  align-items: center;
-  margin-left: 200px;
-}
-
-.sidenav {
-  width: 200px;
-}
-
-.menu-button {
-  text-align: left;
+#main-app{
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
