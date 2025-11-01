@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import {} from '@angular/material/icon'
 // Shared Components
 import { SideNav } from './ui/shared/side-nav/side-nav';
 
