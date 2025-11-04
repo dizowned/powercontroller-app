@@ -46,10 +46,15 @@ selectedView: any;
 
 
   isExpanded = true;
-  showSubmenu: boolean = false;
+  showSubmenu: boolean = true;
   isShowing = false;
-  showSubSubMenu: boolean = false;
+  menuOpen = signal(true);
 
+  toggleSidenav() {
+    this.sidenav?.toggle();
+    this.menuOpen.set(!this.menuOpen());
+
+  }
   mouseenter() {
     if (!this.isExpanded) {
       this.isShowing = true;
