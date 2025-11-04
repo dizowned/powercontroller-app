@@ -55,15 +55,4 @@ selectedView: any;
     this.menuOpen.set(!this.menuOpen());
 
   }
-  mouseenter() {
-    if (!this.isExpanded) {
-      this.isShowing = true;
-    }
-  }
-
-  mouseleave() {
-    if (!this.isExpanded) {
-      this.isShowing = false;
-    }
-  }
 }
