@@ -15,7 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import {} from '@angular/material/icon'
 // Shared Components
-import { SideNav } from './ui/shared/side-nav/side-nav';
+//import { SideNav } from './ui/shared/side-nav/side-nav';
 
 @Component({
   selector: 'app-root',
@@ -33,26 +33,25 @@ import { SideNav } from './ui/shared/side-nav/side-nav';
     MatDividerModule,
     MatListModule,
     RouterOutlet,
-    SideNav
+    //SideNav
 ],
   standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('POWER CONTROLLER APP');
-selectedView: any;
-@ViewChild('sidenav') sidenav: MatSidenav | undefined;
-
-
-  isExpanded = true;
-  showSubmenu: boolean = true;
-  isShowing = false;
-  menuOpen = signal(true);
+protected readonly title = signal('POWER CONTROLLER1 APP');
+isExpanded = signal(true);
+showMenu = signal(true);
+menuOpen = signal(true);
 
   toggleSidenav() {
-    this.sidenav?.toggle();
+    this.isExpanded.set(!this.isExpanded());
     this.menuOpen.set(!this.menuOpen());
+    console.log("Sidenav toggled. isExpanded:", this.isExpanded(), "menuOpen:", this.menuOpen());
+  }
 
+  openMenu(){
+    this.showMenu.set(true);
   }
 }

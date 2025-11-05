@@ -1,28 +1,29 @@
 <mat-toolbar class="mat-elevation-z4">
-  <button mat-icon-button (click)="isExpanded = !isExpanded" (click)="toggleSidenav()">
+  <button mat-icon-button (click)="toggleSidenav()">
     <mat-icon matListItemIcon>menu</mat-icon>
   </button>
   <span> {{ title() }}</span>
 </mat-toolbar>
-<mat-sidenav-container class="example-container" autosize>
-  <mat-sidenav #sidenav class="example-sidenav" mode="side" opened=menuOpen() autosize>
+<mat-sidenav-container class="sidenav-container" autosize>
+  <mat-sidenav class="sidenav" mode="side" opened="{{ this.menuOpen() }}" autosize>
+    @if(isExpanded()) {
     <mat-nav-list>
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent">
-        <mat-icon matListItemIcon [ngClass]="{'rotated' : showSubmenu}"
-          *ngIf="isExpanded || isShowing">expand_more</mat-icon>
-        <span matListItemTitle class="full-width" *ngIf="isExpanded || isShowing">Menu</span>
+      <mat-list-item (click)="this.openMenu()">
+        <mat-icon matListItemIcon [ngClass]="{'rotated' : showMenu}">expand_more</mat-icon>
+        <span matListItemTitle class="full-width">Menu</span>
       </mat-list-item>
-      <div class="submenu" [ngClass]="{'expanded' : showSubmenu}" *ngIf="isShowing || isExpanded">
+      <div class="sidenav-menu" [ngClass]="{'expanded' : showMenu}">
         <a mat-list-item href="/">
           <mat-icon matListItemIcon>home</mat-icon>
-          <span matListItemTitle *ngIf="isExpanded || isShowing">Home</span>
+          <span matListItemTitle>Home</span>
         </a>
         <a mat-list-item href="/configuration">
           <mat-icon matListItemIcon>settings</mat-icon>
-          <span matListItemTitle *ngIf="isExpanded || isShowing">Settings</span>
+          <span matListItemTitle>Settings</span>
         </a>
       </div>
     </mat-nav-list>
+  }
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content" autosize>
     <router-outlet></router-outlet>
