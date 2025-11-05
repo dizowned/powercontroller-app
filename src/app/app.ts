@@ -40,7 +40,7 @@ import {} from '@angular/material/icon'
   styleUrl: './app.css'
 })
 export class App {
-protected readonly title = signal('POWER CONTROLLER1 APP');
+protected readonly title = signal('POWER CONTROLLER APP');
 isExpanded = signal(true);
 showMenu = signal(true);
 menuOpen = signal(true);
