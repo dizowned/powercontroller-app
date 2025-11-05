@@ -8,11 +8,11 @@
   <mat-sidenav class="sidenav" mode="side" opened="{{ this.menuOpen() }}" autosize>
     @if(isExpanded()) {
     <mat-nav-list>
-      <mat-list-item (click)="this.openMenu()">
-        <mat-icon matListItemIcon [ngClass]="{'rotated' : showMenu}">expand_more</mat-icon>
+      <mat-list-item (click)="this.toggleMenu()">
+        <mat-icon matListItemIcon [ngClass]="{'rotated' : showMenu() }">expand_more</mat-icon>
         <span matListItemTitle class="full-width">Menu</span>
       </mat-list-item>
-      <div class="sidenav-menu" [ngClass]="{'expanded' : showMenu}">
+      <div class="sidenav-menu" [ngClass]="{'expanded' : showMenu() }">
         <a mat-list-item href="/">
           <mat-icon matListItemIcon>home</mat-icon>
           <span matListItemTitle>Home</span>

@@ -40,13 +40,6 @@ mat-toolbar {
   transform: rotate(180deg);
 }
 
-.title {
-  font-size: 30px;
-  font-weight: bold;
-  justify-content: center;
-  box-shadow: 1px 1px 5px rgba(230, 226, 226, 0.3);
-}
-
 .rotated{
   transform: rotate(180deg);
 }

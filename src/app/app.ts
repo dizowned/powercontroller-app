@@ -51,7 +51,7 @@ menuOpen = signal(true);
     console.log("Sidenav toggled. isExpanded:", this.isExpanded(), "menuOpen:", this.menuOpen());
   }
 
-  openMenu(){
-    this.showMenu.set(true);
+  toggleMenu(){
+    this.showMenu.set(!this.showMenu());
   }
 }
