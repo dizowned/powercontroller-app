@@ -7,7 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ChannelComponent} from '../../components/channel/channel.component';
 import {MatListModule } from "@angular/material/list";
-import {PowercontrollerService } from '../../services/powercontroller-service';
+import {PowerControllerService } from '../../services/powercontroller-service';
 import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-controller',
@@ -33,13 +33,13 @@ export class Controller {
  channelList = model <ChannelComponent[]> ([]);
  client!: HttpClient;
  controller_info: any;
- private powerControllerService!: PowercontrollerService;
+ private powerControllerService!: PowerControllerService;
 
   constructor(){
     if (this.controller_url !== undefined && this.controller_url !== '') {
     console.log("Fetching controller info from: " + this.controller_url);
     this.client = new HttpClient(null as any);
-    this.powerControllerService = new PowercontrollerService(this.client);
+    this.powerControllerService = new PowerControllerService(this.client);
     this.controller_info = this.powerControllerService.getControllerInfo(this.controller_url)
       .subscribe((data: { controllerName: string; noChannels: number; channelList: ChannelComponent[]}) => {
         this.controllerName = data.controllerName;

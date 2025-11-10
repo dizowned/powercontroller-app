@@ -5,12 +5,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class PowercontrollerService {
+export class PowerControllerService {
 
   constructor(private http: HttpClient) { }
 
   getControllerInfo(controller_url: string): any {
-    return this.http.get<any>(controller_url);
-
+    this.http.get<any>(controller_url);
+    return true;
   }
+
 }

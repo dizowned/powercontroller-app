@@ -1,0 +1,25 @@
+.rotated{
+  transform: rotate(180deg);
+}
+
+.full-width{
+  width: 100%;
+}
+
+.mat-card-header{
+  width: 100%;
+  justify-content: right;
+}
+
+mat-form-field {
+  width: 50%;
+  appearance: outline;
+}
+
+.config-width{
+  width: 70%;
+}
+
+.config-button{
+  margin-right: 10px;
+}
