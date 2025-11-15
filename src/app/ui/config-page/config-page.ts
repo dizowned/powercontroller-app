@@ -4,7 +4,7 @@ import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { NewControllerService } from '../../services/newcontroller-service';
-import { Controller } from '../../models/controller';
+import { PowerController } from '../../models/powercontroller';
 
 @Component({
   selector: 'app-config-page',

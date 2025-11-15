@@ -1,26 +1,26 @@
-import { Component, model } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PowerControllerService } from '../../services/powercontroller-service';
+import { PowerControllerList } from '../../models/powercontroller';
 import { Controller } from '../../components/controller/controller.component';
-import { provideRouter } from '@angular/router';
-import { routes } from '../../app.routes';
-
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-main-page',
   imports: [Controller],
   templateUrl: './main-page.html',
-  styleUrl: './main-page.css'
+  styleUrls: ['./main-page.css'],
+  providers: [PowerControllerService]
 })
-export class MainPage {
-  controllers = model <Controller[]> ([]);
+export class MainPage implements OnInit{
+  public controllers?: PowerControllerList;
 
-  constructor(){
-   for (let i = 0; i < 3; i++) {
-     this.controllers.update((list) => {
-       list.push(new Controller());
-       return list;
-     });
+  constructor(private powerControllerService: PowerControllerService){
+    console.log("MainPage component initializing.");
    }
+  async ngOnInit(): Promise<void> {
+    console.log("MainPage ngOnInit called.");
+    console.log("Service name:", this.powerControllerService.servicename);
+    this.controllers = this.powerControllerService.getSavedControllers()
+    console.log("Received data from PowerControllerService:", this.controllers);
   }
-
-
 }

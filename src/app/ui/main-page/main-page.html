@@ -1,3 +1,7 @@
-@for (controller of controllers(); track $index) {
-  <app-controller controller_url = ''> </app-controller>
+<h1> Controller List </h1>
+<h5> {{ controllers }} </h5>
+<!--
+@for (controller of controllers.controllerList; track $index) {
+  <app-controller [controller]=controller></app-controller>
 }
+-->

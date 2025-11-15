@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Controller } from "../models/controller";
-import { PowerControllerService } from './powercontroller-service';
+import { PowerController } from "../models/powercontroller";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewControllerService {
 
-  private dataSubject = new BehaviorSubject<Controller>(
+  private dataSubject = new BehaviorSubject<PowerController>(
   {name:"", url:"",
     channels:[
     {name:"",number:0,state:false}
@@ -16,13 +15,7 @@ export class NewControllerService {
   }
   );
 
-  constructor(private powerControllerService: PowerControllerService) {}
-  public currentData$ = this.dataSubject.asObservable();
-
-  public addNewController(newData: Controller): boolean{
-    if(this.powerControllerService.getControllerInfo(newData.url)){
-      return true;
-    }
+  public addNewController(newData: PowerController): boolean{
     return false;
   }
 

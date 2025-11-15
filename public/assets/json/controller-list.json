@@ -1,0 +1,40 @@
+[
+    {
+      "name": "Power Controller 1",
+      "url": "http://controller-1.local",
+      "channels": [
+        { "name": "Channel 1", "number": 1, "state": true },
+        { "name": "Channel 2", "number": 2, "state": true },
+        { "name": "Channel 3", "number": 3, "state": true },
+        { "name": "Channel 4", "number": 4, "state": true },
+        { "name": "Channel 5", "number": 5, "state": true },
+        { "name": "Channel 6", "number": 6, "state": true },
+        { "name": "Channel 7", "number": 7, "state": true },
+        { "name": "Channel 8", "number": 8, "state": true },
+        { "name": "Channel 9", "number": 9, "state": true },
+        { "name": "Channel 10", "number": 10, "state": true }
+      ]
+    },
+    {
+      "name": "Power Controller 2",
+      "url": "http://controller-2.local",
+      "channels": [
+        { "name": "Channel 1", "number": 1, "state": true },
+        { "name": "Channel 2", "number": 2, "state": true },
+        { "name": "Channel 3", "number": 3, "state": true },
+        { "name": "Channel 4", "number": 4, "state": true },
+        { "name": "Channel 5", "number": 5, "state": true }
+      ]
+    },
+    {
+      "name": "Power Controller 3",
+      "url": "http://controller-3.local",
+      "channels": [
+        { "name": "Channel 1", "number": 1, "state": true },
+        { "name": "Channel 2", "number": 2, "state": true },
+        { "name": "Channel 3", "number": 3, "state": true },
+        { "name": "Channel 4", "number": 4, "state": true }
+      ]
+    }
+]
+

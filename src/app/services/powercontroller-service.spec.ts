@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PowercontrollerService } from './powercontroller-service';
+import { PowerControllerService } from './powercontroller-service';
 
 describe('PowercontrollerService', () => {
-  let service: PowercontrollerService;
+  let service: PowerControllerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PowercontrollerService);
+    service = TestBed.inject(PowerControllerService);
   });
 
   it('should be created', () => {
