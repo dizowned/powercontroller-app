@@ -1,33 +1,27 @@
-import { Injectable, OnInit } from '@angular/core';
-import { HttpClient, HttpErrorResponse, provideHttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { PowerController, PowerControllerList } from "../models/powercontroller";
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class PowerControllerService {
-  public savedControllers? : PowerControllerList;
+
+  private savedControllerList$!: Observable<PowerController[]>;
   private savedControllerUrl = 'assets/json/controller-list.json'
   public servicename: string = 'PowerControllerService';
 
   constructor(private http: HttpClient) {
-    console.log("PowerControllerService Initializing...");
-      this.http.get<PowerControllerList>(this.savedControllerUrl).subscribe(data => {
-      this.savedControllers = data;
-    });
-      console.log("Fetched controllers:", this.savedControllers);
-
+    console.log("PowerControllerService - Initializing...");
+    this.savedControllerList$ =  this.http.get<PowerController[]>(this.savedControllerUrl);
   }
 
   public addNewController(newData: PowerController){
   }
 
-  public getSavedControllers(): PowerControllerList | undefined {
-      this.http.get<PowerControllerList>(this.savedControllerUrl).subscribe(data => {
-      this.savedControllers = data;
-    });
-    console.log("Returning saved controllers:", this.savedControllers);
-    return this.savedControllers;
+  public getSavedControllers(): Observable<PowerController []>{
+    console.log("PowerControllerService - Returning saved controllers:", this.savedControllerList$);
+    return this.savedControllerList$;
   }
 
 }

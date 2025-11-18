@@ -1,19 +1,19 @@
 <mat-accordion>
 <mat-expansion-panel>
   <mat-expansion-panel-header>
-    <h3> {{ controllerName }} </h3>
+    <h3> {{ controller()?.name }} </h3>
   </mat-expansion-panel-header>
   <div align="center" class="channel_list">
     <table>
       <tr>
         <td>
-        @for (controller_channel of channelList(); track $index){
+        @for (controller_channel of controller()?.channels; track $index){
           <app-channel
-            [(channelNo)]=controller_channel.channelNo
-            [(channelName)]=controller_channel.channelName
-            [(channelEnabled)]=controller_channel.channelEnabled
-            [(buttonColor)]=controller_channel.buttonColor
-          >
+            [(channelNo)]=controller_channel.number
+            [(channelName)]=controller_channel.name
+            [(channelEnabled)]=controller_channel.state
+            [buttonColor]="controller_channel.state ? 'green' : 'red'"
+            >
           </app-channel>
         }
         </td>

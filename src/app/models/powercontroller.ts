@@ -7,5 +7,9 @@ export interface PowerController {
 }
 
 export interface PowerControllerList {
-  controllerList: PowerController[]
+  controllers: PowerController[]
+}
+
+export function extractControllers(list: PowerControllerList | null | undefined): PowerController[] {
+  return (list && Array.isArray(list.controllers)) ? list.controllers : [];
 }

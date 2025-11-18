@@ -1,7 +1,5 @@
-<h1> Controller List </h1>
-<h5> {{ controllers }} </h5>
-<!--
-@for (controller of controllers.controllerList; track $index) {
-  <app-controller [controller]=controller></app-controller>
+@for(controller of displayControllers; track controller.name) {
+    <div>
+      <app-controller [controller]="controller" ></app-controller>
+   </div>
 }
--->
