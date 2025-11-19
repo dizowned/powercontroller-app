@@ -3,11 +3,11 @@
       "name": "Power Controller 15",
       "url": "http://controller-1.local",
       "channels": [
-        { "name": "Unit 1", "number": 1, "state": true },
+        { "name": "Unit 1", "number": 1, "state": false },
         { "name": "Channel 2", "number": 2, "state": true },
         { "name": "Channel 3", "number": 3, "state": true },
         { "name": "Channel 4", "number": 4, "state": true },
-        { "name": "Unit 5", "number": 5, "state": true },
+        { "name": "Unit 5", "number": 5, "state": false },
         { "name": "Channel 6", "number": 6, "state": true },
         { "name": "Channel 7", "number": 7, "state": true },
         { "name": "Channel 8", "number": 8, "state": true },
@@ -23,7 +23,7 @@
         { "name": "Channel 2", "number": 2, "state": true },
         { "name": "Channel 3", "number": 3, "state": true },
         { "name": "Channel 4", "number": 4, "state": true },
-        { "name": "Channel 5", "number": 5, "state": true }
+        { "name": "Channel 5", "number": 5, "state": false }
       ]
     },
     {
@@ -32,7 +32,7 @@
       "channels": [
         { "name": "Channel 1", "number": 1, "state": true },
         { "name": "Channel 2", "number": 2, "state": true },
-        { "name": "Channel 3", "number": 3, "state": true },
+        { "name": "Channel 3", "number": 3, "state": false },
         { "name": "Channel 4", "number": 4, "state": true }
       ]
     }

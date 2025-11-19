@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, model, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { PowerControllerService } from '../../services/powercontroller-service';
 import { extractControllers, PowerControllerList, PowerController } from '../../models/powercontroller';
 import { Controller } from '../../components/controller/controller.component';
@@ -12,15 +12,17 @@ import { CommonModule } from '@angular/common';
   imports: [Controller, CommonModule],
   providers: []
 })
-export class MainPage implements OnInit{
+export class MainPage implements OnInit, OnChanges{
   public controllerlist!: PowerControllerList;
-  displayControllers: PowerController[] = [];
-  public cname = '';
-  public curl = ''
+  displayControllers = model<PowerController[]>();
 
   constructor(private powerControllerService: PowerControllerService){
     console.log("MainPage component initializing.");
    }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.controllerlist = changes['controllerlist'].currentValue;
+    console.log("MainPage component OnChanges - controllerlist changed:", this.controllerlist);
+  }
 
    ngOnInit(): void {
     console.log("MainPage component OnInit - Fetching controllers from PowerControllerService.");
@@ -45,14 +47,9 @@ export class MainPage implements OnInit{
 
   LoadControllers(): boolean{
     console.log("MainPage component - Loading controllers:", this.controllerlist);
-    extractControllers(this.controllerlist).forEach((controller) => {
-      this.displayControllers.push(controller);
-      console.log("Loaded \n Controller Name: " + controller.name + ", URL: " + controller.url + ", Channels: " + (controller.channels ? controller.channels.length : 0)  );
-    });
-
+      this.displayControllers.set([...this.controllerlist.controllers]);
     if(this.displayControllers.length > 0)
       return true;
-
     return false;
   }
 

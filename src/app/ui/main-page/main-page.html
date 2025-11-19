@@ -1,4 +1,4 @@
-@for(controller of displayControllers; track controller.name) {
+@for(controller of displayControllers(); track controller.name) {
     <div>
       <app-controller [controller]="controller" ></app-controller>
    </div>

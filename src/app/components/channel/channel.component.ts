@@ -1,11 +1,11 @@
-import { Component, model, ChangeDetectionStrategy, ChangeDetectorRef, Input, input } from '@angular/core';
+import { Component, model, input, OnInit } from '@angular/core';
 @Component({
   standalone: true,
   selector: 'app-channel',
   templateUrl: './channel.component.html',
   styleUrls: ['./channel.component.css'],
 })
-export class ChannelComponent {
+export class ChannelComponent implements OnInit{
 
   channelNo = model<number>();
   channelName = model<string>();
@@ -13,7 +13,10 @@ export class ChannelComponent {
   buttonColor = input<string>();
 
   constructor() {
-    console.log("Channel initialized: " + this.channelName() + " (No. " + this.channelNo() + ") with state: " + (this.channelEnabled() ? 'enabled' : 'disabled'));
+    console.log("Channel initializing");
+  }
+  ngOnInit(): void {
+    console.log("Channel component OnInit - Channel initialized: " + this.channelName() + " (No. " + this.channelNo() + ") with state: " + (this.channelEnabled() ? 'enabled' : 'disabled'));
   }
 
   toggleChannel() {

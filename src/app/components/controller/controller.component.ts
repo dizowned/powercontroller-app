@@ -1,4 +1,4 @@
-import {Component, model, ChangeDetectionStrategy, input, Input, OnInit, ChangeDetectorRef, OnChanges, SimpleChanges}  from '@angular/core';
+import {Component, model, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, OnChanges, SimpleChanges}  from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -50,7 +50,7 @@ export class Controller implements OnInit, OnChanges {
   }
 
   toggleAllOn() {
-    console.log('Toggling all channels on:' + this.channels); ;
+    console.log('Toggling all channels on:' + this.controller.name); ;
     if (this.channels != null) {
       for (let index = 0; index < this.channels?.length; index++) {
         this.channels[index] = {
@@ -65,7 +65,7 @@ export class Controller implements OnInit, OnChanges {
   }
 
   toggleAllOff() {
-    console.log('Toggling all channels off: ' + this.channels); ;
+    console.log('Toggling all channels off: ' + this.controller.name); ;
     if (this.channels != null) {
       for (let index = 0; index < this.channels?.length; index++) {
         this.channels[index] = {
