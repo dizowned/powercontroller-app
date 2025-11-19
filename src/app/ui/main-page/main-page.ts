@@ -1,8 +1,8 @@
 import { Component, model, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { PowerControllerService } from '../../services/powercontroller-service';
-import { extractControllers, PowerControllerList, PowerController } from '../../models/powercontroller';
+import { PowerControllerList, PowerController } from '../../models/powercontroller';
 import { Controller } from '../../components/controller/controller.component';
-import { finalize, map, delay } from 'rxjs/operators';
+import { finalize, delay } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 
 @Component({
