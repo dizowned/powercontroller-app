@@ -1,43 +1,92 @@
 import { Component, Input } from '@angular/core';
-import { MatCard, MatCardContent, MatCardTitle, MatCardActions, MatCardHeader } from "@angular/material/card";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
+import {
+  MatCard,
+  MatCardContent,
+  MatCardTitle,
+  MatCardActions,
+  MatCardHeader,
+} from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
-import { NewControllerService } from '../../services/newcontroller-service';
+import { FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
+import { PowerControllerService } from '../../services/powercontroller-service';
 import { PowerController } from '../../models/powercontroller';
 
 @Component({
   selector: 'app-config-page',
-  imports: [MatCard, MatCardContent, MatCardTitle, MatFormField, MatLabel, MatCardActions, FormsModule, MatInput, MatCardHeader],
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatCardTitle,
+    MatFormField,
+    MatLabel,
+    MatCardActions,
+    FormsModule,
+    MatInput,
+    MatCardHeader,
+    MatDividerModule,
+    MatButtonModule,
+    MatIconModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './config-page.html',
-  styleUrl: './config-page.css'
+  styleUrl: './config-page.css',
 })
 export class ConfigPage {
-  @Input() controller_name!: string;
-  @Input() controller_url!: string;
+  controllerGroup = new FormGroup({
+    controller_name: new FormControl(''),
+    controller_url: new FormControl(''),
+  });
+  controller$: PowerController | undefined;
 
-constructor(private NewControllerService: NewControllerService) {}
-save() {
-  console.log("Saving: " + this.controller_name + "," + this.controller_url)
-  this.NewControllerService.addNewController({name: this.controller_name, url: this.controller_url})
-  this.clear()
+  constructor(private powerControllerService: PowerControllerService) {}
+  onSubmit() {
+    if (
+      !this.controllerGroup.get('controller_name')?.value ||
+      !this.controllerGroup.get('controller_url')?.value
+    ) {
+      console.log('Form Incomplete');
+    } else {
+      console.log('Form Submitted');
+      if (this.validateUrl()) {
+        this.saveConfig();
+        this.clear();
+      } else {
+        console.log('Invalid URL');
+      }
+    }
+  }
 
-}
+  clear() {
+    console.log('Clearing Form');
+    this.controllerGroup.get('controller_name')?.setValue('');
+    this.controllerGroup.get('controller_url')?.setValue('');
+  }
 
-clear(){
-  console.log("Clearing Form")
-  this.controller_name = "";
-  this.controller_url = "";
-}
+  validateUrl() {
+    if (!this.controllerGroup.get('controller_url')?.value) {
+      return false;
+    }
+    return true;
+  }
 
-saveConfig() {
-throw new Error('Method not implemented.');
-}
+  saveConfig() {
+    console.log(
+      'Saving: ' +
+        this.controllerGroup.get('controller_name')?.value +
+        ',' +
+        this.controllerGroup.get('controller_url')?.value
+    );
+    this.powerControllerService.addNewController({
+      name: this.controllerGroup.get('controller_name')?.value!,
+      url: this.controllerGroup.get('controller_url')?.value!
+    });
+  }
 
-resetConfig() {
-throw new Error('Method not implemented.');
-}
-
-config: any;
-
+  resetConfig() {
+    throw new Error('Method not implemented.');
+  }
 }

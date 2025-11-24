@@ -1,26 +1,27 @@
+<form [formGroup]="controllerGroup">
 <mat-card class="mat-elevation-z5">
   <mat-card-header>
     <mat-card-title class="mat-card-hearder">Add Controller</mat-card-title>
   </mat-card-header>
-  <mat-card-content class="config-width">
-    <form>
+
+    <mat-card-content class="config-width">
       <p>
-      <mat-form-field>
-        <mat-label>Controller Name</mat-label>
-        <input matInput [(ngModel)]="controller_name" name="Controller Name" placeholder="Controller Name" title="Name"
-          aria-label="Controller name">
-      </mat-form-field>
-    </p>
+        <mat-form-field>
+          <mat-label>Controller Name</mat-label>
+          <input matInput formControlName="controller_name" name="Controller Name" placeholder="Controller Name"
+            title="Name" aria-label="Controller name">
+        </mat-form-field>
+      </p>
       <p>
-      <mat-form-field>
-        <mat-label>Controller URL</mat-label>
-        <input matInput [(ngModel)]="controller_url" name="url" placeholder="http:controller.local">
-      </mat-form-field>
-    </p>
-    </form>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button class="config-button" type="submit" (click)="clear()">Clear</button>
-    <button mat-button class="config-button" type="submit" (click)="save()">Save</button>
-  </mat-card-actions>
+        <mat-form-field>
+          <mat-label>Controller URL</mat-label>
+          <input matInput formControlName="controller_url" name="url" placeholder="http:\\controller.local">
+        </mat-form-field>
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button matButton="filled" type="button" (click)="clear()">Clear</button>
+      <button matButton="filled" type="submit" (click)="onSubmit()">Save</button>
+    </mat-card-actions>
 </mat-card>
+</form>

@@ -4,6 +4,7 @@ import { PowerControllerList, PowerController } from '../../models/powercontroll
 import { Controller } from '../../components/controller/controller.component';
 import { finalize, delay } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -15,6 +16,7 @@ import { CommonModule } from '@angular/common';
 export class MainPage implements OnInit, OnChanges{
   public controllerlist!: PowerControllerList;
   displayControllers = model<PowerController[]>();
+  subscription$: any;
 
   constructor(private powerControllerService: PowerControllerService){
     console.log("MainPage component initializing.");
@@ -26,7 +28,7 @@ export class MainPage implements OnInit, OnChanges{
 
    ngOnInit(): void {
     console.log("MainPage component OnInit - Fetching controllers from PowerControllerService.");
-    this.powerControllerService.getSavedControllers()
+    this.subscription$ = this.powerControllerService.getSavedControllers()
       .pipe(
         delay(0), // Ensures asynchronous execution
         finalize(() => {
@@ -43,6 +45,11 @@ export class MainPage implements OnInit, OnChanges{
           console.error("MainPage component OnInit - Error fetching controllers:", error);
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    console.log("MainPage component OnDestroy - Cleaning up.");
+    this.subscription$?.unsubscribe();
   }
 
   LoadControllers(): boolean{
