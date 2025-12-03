@@ -1,5 +1,5 @@
-export interface Channel {
-  name: string
-  number: number
-  state: boolean
+export interface channel {
+    name: string;
+    state: boolean;
+    channelNo: number
 }

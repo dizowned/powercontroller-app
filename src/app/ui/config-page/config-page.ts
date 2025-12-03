@@ -80,10 +80,15 @@ export class ConfigPage {
         ',' +
         this.controllerGroup.get('controller_url')?.value
     );
-    this.powerControllerService.addNewController({
-      name: this.controllerGroup.get('controller_name')?.value!,
-      url: this.controllerGroup.get('controller_url')?.value!
-    });
+   console.log('Generating random ID for controller');
+   const randomId = Math.floor(Math.random() * 1000000);
+    this.controller$ = {
+      id: randomId,
+      name: this.controllerGroup.get('controller_name')?.value || '',
+      url: this.controllerGroup.get('controller_url')?.value || '',
+      channels: [],
+    };
+    this.powerControllerService.addNewController(this.controller$);
   }
 
   resetConfig() {

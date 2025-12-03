@@ -20,7 +20,7 @@ export class PowerControllerService {
     this.savedControllerList$.subscribe(data => {
       this.storedControllers = data;
       data.forEach(controller => {
-        this.storedControllers.push({name: controller.name, url: controller.url, channels: []});
+        this.storedControllers.push({id: controller.id, name: controller.name, url: controller.url, channels: (controller.channels ? controller.channels : []) });
       });
       localStorage.setItem("ControllerList", JSON.stringify(this.storedControllers));
       console.log("PowerControllerService - Data from:", this.savedControllerUrl);
@@ -29,7 +29,7 @@ export class PowerControllerService {
   }
   public addNewController(newData: PowerController){
     console.log("Updating controller List:", this.storedControllersData);
-    this.storedControllersData.push({name: newData.name, url: newData.url, channels: []});
+    this.storedControllersData.push({id: newData.id, name: newData.name, url: newData.url, channels: (newData.channels ? newData.channels : [])});
     localStorage.setItem("ControllerList", JSON.stringify(this.storedControllersData));
     console.log("PowerControllerService - New controller added:", newData);
   }

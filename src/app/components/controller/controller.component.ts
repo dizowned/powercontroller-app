@@ -50,14 +50,11 @@ export class Controller implements OnInit, OnChanges {
   }
 
   toggleAllOn() {
-    console.log('Toggling all channels on:' + this.controller.name); ;
+    console.log('Toggling all channels on:' + this.controller?.name);
     if (this.channels != null) {
-      for (let index = 0; index < this.channels?.length; index++) {
-        this.channels[index] = {
-          number: this.channels[index].number,
-          name: this.channels[index].name,
-          state: true,
-        };
+      for (let index = 0; index < this.channels.length; index++) {
+        // set the 'state' property to true on the existing channel object
+          (this.channels[index] as any).state = true;
       }
       console.log('All channels toggled on.');
     }
@@ -68,11 +65,7 @@ export class Controller implements OnInit, OnChanges {
     console.log('Toggling all channels off: ' + this.controller.name); ;
     if (this.channels != null) {
       for (let index = 0; index < this.channels?.length; index++) {
-        this.channels[index] = {
-          number: this.channels[index].number,
-          name: this.channels[index].name,
-          state: false,
-        };
+          (this.channels[index] as any).state = false;
       }
       console.log('All channels toggled off.');
     }

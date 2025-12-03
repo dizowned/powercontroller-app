@@ -1,9 +1,10 @@
-import { Channel } from "./channel"
+import { channel } from "./channel"
 
 export interface PowerController {
+  id: number;
   name: string
   url: string
-  channels?: Channel[]
+  channels: channel[]
 }
 
 export interface PowerControllerList {
