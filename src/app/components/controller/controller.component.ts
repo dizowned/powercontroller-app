@@ -5,7 +5,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
-import {ChannelComponent} from '../../components/channel/channel.component';
+import {ChannelComponent} from '../channel/channel.component';
 import {MatListModule} from "@angular/material/list";
 import {PowerController} from '../../models/powercontroller';
 @Component({
