@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { combineLatest, Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { PowerController, PowerControllerList } from "../models/powercontroller";
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,12 @@ export class PowerControllerService {
     console.log(this.servicename + " - Initializing...");
 
     console.log(this.servicename + " - Fetching any controllers from local JSON:", this.savedControllerJSON);
-    this.savedControllerList$ =  this.http.get<PowerController[]>(this.savedControllerJSON);
+    this.savedControllerList$ = this.http.get<PowerController[]>(this.savedControllerJSON).pipe(
+      catchError(error => {
+        console.error(this.servicename + " - Failed to fetch from local JSON:", error);
+        return of([]); // Return empty array on error
+      })
+    );
     this.savedControllerList$.subscribe(data => {
       console.log(this.servicename + " - Fetched controllers from local JSON:", data);
       data.forEach(controller => {
@@ -34,7 +39,12 @@ export class PowerControllerService {
     });
 
     console.log(this.servicename + " - Fetching any controllers from local Server:", this.serverControllerUrl);
-    this.serverControllerList$ = this.http.get<PowerController[]>(this.serverControllerUrl);
+    this.serverControllerList$ = this.http.get<PowerController[]>(this.serverControllerUrl).pipe(
+      catchError(error => {
+        console.error(this.servicename + " - Failed to fetch from server:", error);
+        return of([]); // Return empty array on error
+      })
+    );
 
     this.serverControllerList$.subscribe(data => {
       console.log(this.servicename + " - Fetched controllers from Server:", data);
@@ -50,7 +60,10 @@ export class PowerControllerService {
 
     this.allControllersList$ = combineLatest<[PowerController[], PowerController[]]>([this.savedControllerList$, this.serverControllerList$]).pipe(
       map(([savedControllers, serverControllers]) => {
-        const controllers = [...savedControllers, ...serverControllers];
+        // Ensure arrays are defined (defensive check)
+        const saved = savedControllers || [];
+        const server = serverControllers || [];
+        const controllers = [...saved, ...server];
         console.log(this.servicename + " - Combined controller list:", controllers);
         return controllers;
       })
