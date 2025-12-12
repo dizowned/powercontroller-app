@@ -1,4 +1,5 @@
 import { Component, model, input, OnInit } from '@angular/core';
+import { PowerControllerService } from '../../services/powercontroller-service';
 @Component({
   standalone: true,
   selector: 'app-channel',
@@ -11,8 +12,9 @@ export class ChannelComponent implements OnInit{
   channelName = model<string>();
   channelEnabled = model<boolean>();
   buttonColor = input<string>();
+  controllerId = input<number>();
 
-  constructor() {
+  constructor(private powerControllerService: PowerControllerService) {
     console.log("Channel initializing");
   }
   ngOnInit(): void {
@@ -20,15 +22,28 @@ export class ChannelComponent implements OnInit{
   }
 
   toggleChannel() {
-    if (this.channelEnabled()) {
-      this.turnOff();
-    } else {
-      this.turnOn();
+    const nextState = !this.channelEnabled();
+    // optimistic update
+    this.channelEnabled.set(nextState);
+    const controllerId = this.controllerId();
+    const channelNo = this.channelNo();
+    if (controllerId == null || channelNo == null) {
+      console.warn('ControllerId or channelNo missing; reverting state');
+      this.channelEnabled.set(!nextState);
+      return;
     }
+    this.powerControllerService.setChannelState(controllerId, channelNo, nextState).subscribe(resp => {
+      if (!resp.success) {
+        console.warn('Server failed to set state; reverting');
+        this.channelEnabled.set(!nextState);
+      } else {
+        this.channelEnabled.set(resp.state);
+      }
+    });
     console.log(
-        this.channelName() +
-        ' toggled to: ' +
-        (this.channelEnabled() ? 'enabled' : 'disabled')
+      this.channelName() +
+      ' toggled to: ' +
+      (nextState ? 'enabled' : 'disabled')
     );
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { combineLatest, Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { PowerController, PowerControllerList } from "../models/powercontroller";
 @Injectable({
   providedIn: 'root'
@@ -82,6 +82,23 @@ export class PowerControllerService {
     console.log(this.servicename + " - Returning Controllers from JSON:", this.savedControllerList$);
     console.log(this.servicename + " - Returning Controllers from Server:", this.serverControllerList$);
     return this.allControllersList$;
+  }
+
+  /**
+   * Set channel state on server for a given controller and channel number
+   * Assumes server route: POST /controllers/:controllerId/channels/:channelNo/state
+   * Body: { state: boolean }
+   */
+  public setChannelState(controllerId: number, channelNo: number, state: boolean): Observable<{ success: boolean; state: boolean }>{
+    const url = `http://localhost:3000/controllers/${controllerId}/channels/${channelNo}/state`;
+    console.log(this.servicename + ` - Setting state for controller ${controllerId} channel ${channelNo} -> ${state}`);
+    return this.http.post<{ success: boolean; state: boolean }>(url, { state }).pipe(
+      tap(resp => console.log(this.servicename + ' - Server response for setChannelState:', resp)),
+      catchError(err => {
+        console.error(this.servicename + ' - Error setting channel state:', err);
+        return of({ success: false, state });
+      })
+    );
   }
 
 }
