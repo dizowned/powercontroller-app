@@ -28,7 +28,7 @@ import {PowerController} from '../../models/powercontroller';
 
 export class Controller implements OnInit, OnChanges {
   controller = model<PowerController>();
-  channels = this.controller()?.channels;
+  channels = this.controller()?.channels || [];
 
   constructor(private cdr: ChangeDetectorRef) {
     console.log('Controller component initializing.');
@@ -36,8 +36,9 @@ export class Controller implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['controller']) {
-      this.channels = this.controller()?.channels;
+      this.channels = this.controller()?.channels || [];
       this.cdr.detectChanges();
+      console.log('Controller component detected changes in controller input:', this.controller());
     }
   }
 

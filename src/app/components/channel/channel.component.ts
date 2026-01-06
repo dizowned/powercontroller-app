@@ -6,44 +6,38 @@ import { PowerControllerService } from '../../services/powercontroller-service';
   templateUrl: './channel.component.html',
   styleUrls: ['./channel.component.css'],
 })
-export class ChannelComponent implements OnInit{
+export class ChannelComponent{
 
-  channelNo = model<number>();
+  channelNo = model.required<number>();
   channelName = model<string>();
-  channelEnabled = model<boolean>();
+  channelEnabled = model.required<boolean>();
   buttonColor = input<string>();
-  controllerId = input<number>();
+  controllerId  = input.required<number>();
 
-  constructor(private powerControllerService: PowerControllerService) {
-    console.log("Channel initializing");
+  constructor(private powerControllerService: PowerControllerService ) {
+    console.log('Channel component initializing.');
   }
-  ngOnInit(): void {
-    console.log("Channel component OnInit - Channel initialized: " + this.channelName() + " (No. " + this.channelNo() + ") with state: " + (this.channelEnabled() ? 'enabled' : 'disabled'));
+
+
+  updateChannel(){
+    console.log("Updating channel: " + "Controller ID: "+this.controllerId() + ", Channel No. " + this.channelNo() + ", Channel Name:" + this.channelName() + ", New State: " + this.channelEnabled());
+    this.powerControllerService.setChannelState(this.controllerId(), this.channelNo(), this.channelEnabled());
+
   }
 
   toggleChannel() {
-    const nextState = !this.channelEnabled();
-    // optimistic update
-    this.channelEnabled.set(nextState);
-    const controllerId = this.controllerId();
-    const channelNo = this.channelNo();
-    if (controllerId == null || channelNo == null) {
-      console.warn('ControllerId or channelNo missing; reverting state');
-      this.channelEnabled.set(!nextState);
+    console.log("Toggling channel: " + "Controller ID: "+this.controllerId() + ", Channel No. " + this.channelNo() + ", Channel Name:" + this.channelName());
+    this.channelEnabled.set(!this.channelEnabled());
+    if (this.controllerId() == null || this.channelNo() == null) {
+     console.warn('ControllerId or channelNo missing; reverting state ');
+      this.channelEnabled.set(!this.channelEnabled());
       return;
     }
-    this.powerControllerService.setChannelState(controllerId, channelNo, nextState).subscribe(resp => {
-      if (!resp.success) {
-        console.warn('Server failed to set state; reverting');
-        this.channelEnabled.set(!nextState);
-      } else {
-        this.channelEnabled.set(resp.state);
-      }
-    });
+    this.updateChannel();
     console.log(
       this.channelName() +
       ' toggled to: ' +
-      (nextState ? 'enabled' : 'disabled')
+      (this.channelEnabled() ? 'enabled' : 'disabled')
     );
   }
 
