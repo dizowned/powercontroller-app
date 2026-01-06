@@ -89,22 +89,17 @@ export class PowerControllerService {
    * Assumes server route: POST /setchannelstate/:controllerId/:channelNo/:state
    * Body: { }
    */
-  public setChannelState(controllerId: number, channelNo: number, state: boolean): Observable<{ success: boolean; state: boolean }>{
+  public setChannelState(controllerId: number, channelNo: number, state: boolean): boolean{
     const url = `http://localhost:3000/setchannelstate/${controllerId}/${channelNo}/${state}`;
     console.log(this.servicename + ` - Setting state: ${url}`);
-    return this.http.post<{ success: boolean; state: boolean }>(url, {}).pipe(
-      //tap(() => console.log('Sending POST request to:', url)),
-      tap(resp => console.log(this.servicename + ' - Server response for setChannelState:', resp)),
-      catchError(err => {
-        console.error(this.servicename + ' - Error setting channel state:', err);
-        return of({ success: false, state });
-      }
-    )).subscribe( response => {
+    this.http.post<{ success: boolean; state: boolean }>(url, {}).
+    subscribe( response => {
       if(response.success) {
         console.log(this.servicename + ` - Channel state updated successfully on server: Controller ID ${controllerId}, Channel No ${channelNo}, State: ${state}`);
       } else {
         console.warn(this.servicename + ` - Failed to update channel state on server: Controller ID ${controllerId}, Channel No ${channelNo}`);
       }
   });
+    return state;
   }
 }

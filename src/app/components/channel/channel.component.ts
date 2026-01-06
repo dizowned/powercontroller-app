@@ -19,10 +19,9 @@ export class ChannelComponent{
   }
 
 
-  updateChannel(){
+  updateChannel(): boolean{
     console.log("Updating channel: " + "Controller ID: "+this.controllerId() + ", Channel No. " + this.channelNo() + ", Channel Name:" + this.channelName() + ", New State: " + this.channelEnabled());
-    this.powerControllerService.setChannelState(this.controllerId(), this.channelNo(), this.channelEnabled());
-
+    return this.powerControllerService.setChannelState(this.controllerId(), this.channelNo(), this.channelEnabled());
   }
 
   toggleChannel() {
@@ -33,12 +32,12 @@ export class ChannelComponent{
       this.channelEnabled.set(!this.channelEnabled());
       return;
     }
-    this.updateChannel();
-    console.log(
-      this.channelName() +
-      ' toggled to: ' +
-      (this.channelEnabled() ? 'enabled' : 'disabled')
-    );
+    if (this.updateChannel()){
+      console.log(this.channelName() + ' toggled to: ' + (this.channelEnabled() ? 'enabled' : 'disabled'));
+    } else {
+      console.warn('Failed to update channel state on server; reverting state ');
+      this.channelEnabled.set(!this.channelEnabled());
+    }
   }
 
   turnOn() {
