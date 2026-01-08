@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { PowerController, PowerControllerList } from "../models/powercontroller";
@@ -94,12 +94,31 @@ export class PowerControllerService {
     console.log(this.servicename + ` - Setting state: ${url}`);
     this.http.post<{ success: boolean; state: boolean }>(url, {}).
     subscribe( response => {
-      if(response.success) {
-        console.log(this.servicename + ` - Channel state updated successfully on server: Controller ID ${controllerId}, Channel No ${channelNo}, State: ${state}`);
+      console.log(this.servicename + ` - Server response:`, response);
+      if(response.success){
+        console.warn(this.servicename + ` - Channel state updated successfully on server: Controller ID ${controllerId}, Channel No ${channelNo}, State: ${state}`);
+
       } else {
         console.warn(this.servicename + ` - Failed to update channel state on server: Controller ID ${controllerId}, Channel No ${channelNo}`);
+        state = !state; // revert state on failure
       }
-  });
-    return state;
+  })
+    this.updateControllerChannelState(controllerId, channelNo, state);
+    return true;
+  }
+  updateControllerChannelState(controllerId: number, channelNo: number, state: boolean) {
+    const controller = this.storedControllers.find(c => c.id === controllerId);
+    if (controller) {
+      const channel = controller.channels?.find(ch => ch.number === channelNo);
+      if (channel) {
+        channel.state = state;
+        console.log(this.servicename + ` - Updated local channel state: Controller ID ${controllerId}, Channel No ${channelNo}, State: ${state}`);
+      } else {
+        console.warn(this.servicename + ` - Channel No ${channelNo} not found in Controller ID ${controllerId}`);
+      }
+    } else {
+      console.warn(this.servicename + ` - Controller ID ${controllerId} not found`);
+
+  }
   }
 }
